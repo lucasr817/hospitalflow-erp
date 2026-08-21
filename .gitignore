@@ -1,0 +1,108 @@
+# ============================================================
+# HospitalFlow ERP
+# Java + Spring Boot + Maven + IntelliJ IDEA
+# ============================================================
+
+# ------------------------------------------------------------
+# Maven
+# ------------------------------------------------------------
+target/
+HELP.md
+!.mvn/wrapper/maven-wrapper.jar
+
+# Maven generated files
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+.mvn/wrapper/maven-wrapper.jar
+
+# ------------------------------------------------------------
+# Java
+# ------------------------------------------------------------
+*.class
+*.log
+*.ctxt
+*.jar
+*.war
+*.ear
+
+# ------------------------------------------------------------
+# IntelliJ IDEA
+# ------------------------------------------------------------
+.idea/
+*.iml
+*.iws
+*.ipr
+out/
+
+# IntelliJ generated files
+.idea/workspace.xml
+.idea/usage.statistics.xml
+.idea/dictionaries/
+.idea/shelf/
+
+# ------------------------------------------------------------
+# Visual Studio Code
+# ------------------------------------------------------------
+.vscode/
+
+# ------------------------------------------------------------
+# Eclipse / Spring Tool Suite
+# ------------------------------------------------------------
+.classpath
+.project
+.settings/
+.springBeans
+.sts4-cache
+.factorypath
+.apt_generated/
+
+# ------------------------------------------------------------
+# NetBeans
+# ------------------------------------------------------------
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+# ------------------------------------------------------------
+# Operating System
+# ------------------------------------------------------------
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# ------------------------------------------------------------
+# Logs
+# ------------------------------------------------------------
+logs/
+*.log
+
+# ------------------------------------------------------------
+# Environment variables
+# ------------------------------------------------------------
+.env
+.env.*
+!.env.example
+
+# ------------------------------------------------------------
+# Local application configuration
+# ------------------------------------------------------------
+application-local.yml
+application-local.yaml
+application-local.properties
+
+# ------------------------------------------------------------
+# Temporary files
+# ------------------------------------------------------------
+*.tmp
+*.temp
+*.swp
+*.swo
+*~
