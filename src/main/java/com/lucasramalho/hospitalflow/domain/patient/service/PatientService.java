@@ -16,12 +16,19 @@ public class PatientService {
 
     public Patient cadastrarPaciente(Patient patient) {
 
-        if (patient.getMedicalRecordNumber() == null ||
-                patient.getMedicalRecordNumber().isBlank()) {
+        Patient pacienteSalvo = patientRepository.save(patient);
 
-            patient.setMedicalRecordNumber("PRT-" + System.currentTimeMillis());
+        if (pacienteSalvo.getMedicalRecordNumber() == null ||
+                pacienteSalvo.getMedicalRecordNumber().isBlank()) {
+
+            String medicalRecordNumber =
+                    String.format("PRT-%06d", pacienteSalvo.getId());
+
+            pacienteSalvo.setMedicalRecordNumber(medicalRecordNumber);
+
+            pacienteSalvo = patientRepository.save(pacienteSalvo);
         }
 
-        return patientRepository.save(patient);
+        return pacienteSalvo;
     }
 }
