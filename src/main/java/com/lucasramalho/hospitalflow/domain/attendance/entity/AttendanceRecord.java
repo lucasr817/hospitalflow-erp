@@ -1,5 +1,7 @@
 package com.lucasramalho.hospitalflow.domain.attendance.entity;
 
+import com.lucasramalho.hospitalflow.domain.attendance.enums.AttendanceStatus;
+import com.lucasramalho.hospitalflow.domain.attendance.enums.AttendanceType;
 import com.lucasramalho.hospitalflow.domain.patient.entity.Patient;
 import jakarta.persistence.*;
 
@@ -20,11 +22,13 @@ public class AttendanceRecord {
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "attendance_type", nullable = false, length = 30)
-    private String attendanceType;
+    private AttendanceType attendanceType;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false, length = 30)
-    private String status;
+    private AttendanceStatus status;
 
     public AttendanceRecord() {
     }
@@ -49,19 +53,19 @@ public class AttendanceRecord {
         this.createdAt = createdAt;
     }
 
-    public String getAttendanceType() {
+    public AttendanceType getAttendanceType() {
         return attendanceType;
     }
 
-    public void setAttendanceType(String attendanceType) {
+    public void setAttendanceType(AttendanceType attendanceType) {
         this.attendanceType = attendanceType;
     }
 
-    public String getStatus() {
+    public AttendanceStatus getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(AttendanceStatus status) {
         this.status = status;
     }
 }

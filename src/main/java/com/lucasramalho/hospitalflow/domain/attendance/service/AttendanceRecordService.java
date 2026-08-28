@@ -2,6 +2,7 @@ package com.lucasramalho.hospitalflow.domain.attendance.service;
 
 import com.lucasramalho.hospitalflow.domain.attendance.dto.CreateAttendanceRecordRequest;
 import com.lucasramalho.hospitalflow.domain.attendance.entity.AttendanceRecord;
+import com.lucasramalho.hospitalflow.domain.attendance.enums.AttendanceStatus;
 import com.lucasramalho.hospitalflow.domain.attendance.repository.AttendanceRecordRepository;
 import com.lucasramalho.hospitalflow.domain.patient.entity.Patient;
 import com.lucasramalho.hospitalflow.domain.patient.repository.PatientRepository;
@@ -31,7 +32,7 @@ public class AttendanceRecordService {
         attendanceRecord.setPatient(patient);
         attendanceRecord.setCreatedAt(request.getCreatedAt());
         attendanceRecord.setAttendanceType(request.getAttendanceType());
-        attendanceRecord.setStatus(request.getStatus());
+        attendanceRecord.setStatus(AttendanceStatus.AGUARDANDO);
 
         return attendanceRecordRepository.save(attendanceRecord);
     }

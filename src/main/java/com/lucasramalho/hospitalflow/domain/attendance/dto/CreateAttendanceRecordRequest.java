@@ -1,5 +1,7 @@
 package com.lucasramalho.hospitalflow.domain.attendance.dto;
 
+import com.lucasramalho.hospitalflow.domain.attendance.enums.AttendanceType;
+
 import java.time.LocalDateTime;
 
 public class CreateAttendanceRecordRequest {
@@ -8,9 +10,7 @@ public class CreateAttendanceRecordRequest {
 
     private LocalDateTime createdAt;
 
-    private String attendanceType;
-
-    private String status;
+    private AttendanceType attendanceType;
 
     public Long getPatientId() {
         return patientId;
@@ -28,19 +28,11 @@ public class CreateAttendanceRecordRequest {
         this.createdAt = createdAt;
     }
 
-    public String getAttendanceType() {
+    public AttendanceType getAttendanceType() {
         return attendanceType;
     }
 
-    public void setAttendanceType(String attendanceType) {
+    public void setAttendanceType(AttendanceType attendanceType) {
         this.attendanceType = attendanceType;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
     }
 }
