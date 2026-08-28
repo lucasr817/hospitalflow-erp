@@ -1,7 +1,7 @@
 package com.lucasramalho.hospitalflow.domain.attendance.controller;
 
+import com.lucasramalho.hospitalflow.domain.attendance.dto.AttendanceRecordResponse;
 import com.lucasramalho.hospitalflow.domain.attendance.dto.CreateAttendanceRecordRequest;
-import com.lucasramalho.hospitalflow.domain.attendance.entity.AttendanceRecord;
 import com.lucasramalho.hospitalflow.domain.attendance.service.AttendanceRecordService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,17 +12,45 @@ public class AttendanceRecordController {
 
     private final AttendanceRecordService attendanceRecordService;
 
-    public AttendanceRecordController(AttendanceRecordService attendanceRecordService) {
+    public AttendanceRecordController(
+            AttendanceRecordService attendanceRecordService) {
+
         this.attendanceRecordService = attendanceRecordService;
     }
 
     @PostMapping
-    public ResponseEntity<AttendanceRecord> criarFicha(
+    public ResponseEntity<AttendanceRecordResponse> criarFicha(
             @RequestBody CreateAttendanceRecordRequest request) {
 
-        AttendanceRecord createdRecord =
-                attendanceRecordService.criarFicha(request);
+        return ResponseEntity.ok(
+                attendanceRecordService.criarFicha(request)
+        );
+    }
 
-        return ResponseEntity.ok(createdRecord);
+    @PutMapping("/{id}/start")
+    public ResponseEntity<AttendanceRecordResponse> iniciarAtendimento(
+            @PathVariable Long id) {
+
+        return ResponseEntity.ok(
+                attendanceRecordService.iniciarAtendimento(id)
+        );
+    }
+
+    @PutMapping("/{id}/finish")
+    public ResponseEntity<AttendanceRecordResponse> finalizarAtendimento(
+            @PathVariable Long id) {
+
+        return ResponseEntity.ok(
+                attendanceRecordService.finalizarAtendimento(id)
+        );
+    }
+
+    @PutMapping("/{id}/cancel")
+    public ResponseEntity<AttendanceRecordResponse> cancelarAtendimento(
+            @PathVariable Long id) {
+
+        return ResponseEntity.ok(
+                attendanceRecordService.cancelarAtendimento(id)
+        );
     }
 }
