@@ -5,6 +5,7 @@ import com.lucasramalho.hospitalflow.domain.attendance.dto.CreateAttendanceRecor
 import com.lucasramalho.hospitalflow.domain.attendance.service.AttendanceRecordService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import java.util.List;
 
 @RestController
 @RequestMapping("/attendance-records")
@@ -18,6 +19,22 @@ public class AttendanceRecordController {
         this.attendanceRecordService = attendanceRecordService;
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<AttendanceRecordResponse> buscarPorId(
+            @PathVariable Long id) {
+
+        return ResponseEntity.ok(
+                attendanceRecordService.buscarPorIdResponse(id)
+        );
+    }
+
+    @GetMapping("/queue")
+    public ResponseEntity<List<AttendanceRecordResponse>> buscarFila() {
+
+        return ResponseEntity.ok(
+                attendanceRecordService.buscarFila()
+        );
+    }
     @PostMapping
     public ResponseEntity<AttendanceRecordResponse> criarFicha(
             @RequestBody CreateAttendanceRecordRequest request) {

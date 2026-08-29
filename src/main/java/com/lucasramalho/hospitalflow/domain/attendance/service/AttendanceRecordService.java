@@ -9,6 +9,7 @@ import com.lucasramalho.hospitalflow.domain.patient.entity.Patient;
 import com.lucasramalho.hospitalflow.domain.patient.repository.PatientRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import java.util.List;
 
 @Service
 @Transactional
@@ -23,6 +24,18 @@ public class AttendanceRecordService {
 
         this.attendanceRecordRepository = attendanceRecordRepository;
         this.patientRepository = patientRepository;
+    }
+
+    public List<AttendanceRecordResponse> buscarFila() {
+
+        List<AttendanceRecord> atendimentos =
+                attendanceRecordRepository.findByStatusOrderByCreatedAtAsc(
+                        AttendanceStatus.AGUARDANDO
+                );
+
+        return atendimentos.stream()
+                .map(this::toResponse)
+                .toList();
     }
 
     public AttendanceRecordResponse criarFicha(
@@ -121,4 +134,11 @@ public class AttendanceRecordService {
                 attendanceRecord.getStatus()
         );
     }
+    public AttendanceRecordResponse buscarPorIdResponse(Long id) {
+
+        AttendanceRecord attendanceRecord = buscarPorId(id);
+
+        return toResponse(attendanceRecord);
+    }
+
 }
