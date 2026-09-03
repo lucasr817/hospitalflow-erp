@@ -7,6 +7,7 @@ import com.lucasramalho.hospitalflow.domain.triage.entity.Triage;
 import com.lucasramalho.hospitalflow.domain.triage.repository.TriageRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import com.lucasramalho.hospitalflow.shared.exception.ResourceNotFoundException;
 
 import java.time.LocalDateTime;
 
@@ -28,12 +29,9 @@ public class TriageService {
     public Triage realizarTriagem(CreateTriageRequest request) {
 
         AttendanceRecord attendanceRecord =
-                attendanceRecordRepository.findById(
-                        request.getAttendanceRecordId()
-                ).orElseThrow(() ->
-                        new RuntimeException(
-                                "Ficha de atendimento não encontrada"
-                        ));
+                attendanceRecordRepository.findById(request.getAttendanceRecordId())
+                        .orElseThrow(() ->
+                                new ResourceNotFoundException("Atendimento não encontrado"));
 
         Triage triage = new Triage();
 
