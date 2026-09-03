@@ -1,15 +1,21 @@
 package com.lucasramalho.hospitalflow.domain.triage.dto;
 
 import com.lucasramalho.hospitalflow.domain.triage.enums.RiskClassification;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 
 public class CreateTriageRequest {
 
+    @NotNull(message = "O atendimento é obrigatório")
     private Long attendanceRecordId;
 
     private String mainComplaint;
 
     private String symptomHistory;
 
+    @Min(value = 0, message = "A intensidade da dor deve ser no mínimo 0")
+    @Max(value = 10, message = "A intensidade da dor deve ser no máximo 10")
     private Integer painIntensity;
 
     private String painRadiation;
@@ -22,16 +28,23 @@ public class CreateTriageRequest {
 
     private String recentContext;
 
+    @Min(value = 1, message = "A frequência cardíaca deve ser maior que 0")
     private Integer heartRate;
 
     private String bloodPressure;
 
+    @Min(value = 1, message = "A frequência respiratória deve ser maior que 0")
     private Integer respiratoryRate;
 
+    @Min(value = 0, message = "A saturação de oxigênio não pode ser negativa")
+    @Max(value = 100, message = "A saturação de oxigênio não pode ser maior que 100")
     private Integer oxygenSaturation;
 
+    @Min(value = 25, message = "A temperatura informada é inválida")
+    @Max(value = 45, message = "A temperatura informada é inválida")
     private Double temperature;
 
+    @Min(value = 0, message = "A glicemia não pode ser negativa")
     private Integer capillaryBloodGlucose;
 
     private String consciousnessLevel;
