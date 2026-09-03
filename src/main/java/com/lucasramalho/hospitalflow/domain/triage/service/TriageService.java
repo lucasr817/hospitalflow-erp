@@ -8,6 +8,7 @@ import com.lucasramalho.hospitalflow.domain.triage.repository.TriageRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.lucasramalho.hospitalflow.shared.exception.ResourceNotFoundException;
+import com.lucasramalho.hospitalflow.shared.exception.BusinessException;
 
 import java.time.LocalDateTime;
 
@@ -27,6 +28,10 @@ public class TriageService {
     }
 
     public Triage realizarTriagem(CreateTriageRequest request) {
+
+        if (triageRepository.existsByAttendanceRecordId(request.getAttendanceRecordId())) {
+            throw new BusinessException("Este atendimento já possui uma triagem");
+        }
 
         AttendanceRecord attendanceRecord =
                 attendanceRecordRepository.findById(request.getAttendanceRecordId())
