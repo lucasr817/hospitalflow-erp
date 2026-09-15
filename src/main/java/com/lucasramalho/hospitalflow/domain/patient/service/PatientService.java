@@ -1,9 +1,9 @@
 package com.lucasramalho.hospitalflow.domain.patient.service;
 
-import org.springframework.stereotype.Service;
-
+import com.lucasramalho.hospitalflow.domain.patient.dto.CreatePatientRequest;
 import com.lucasramalho.hospitalflow.domain.patient.entity.Patient;
 import com.lucasramalho.hospitalflow.domain.patient.repository.PatientRepository;
+import org.springframework.stereotype.Service;
 
 @Service
 public class PatientService {
@@ -14,21 +14,21 @@ public class PatientService {
         this.patientRepository = patientRepository;
     }
 
-    public Patient cadastrarPaciente(Patient patient) {
+    public Patient cadastrarPaciente(CreatePatientRequest request) {
+
+        Patient patient = new Patient();
+
+        patient.setFullName(request.getFullName());
+        patient.setBirthDate(request.getBirthDate());
+        patient.setCpf(request.getCpf());
 
         Patient pacienteSalvo = patientRepository.save(patient);
 
-        if (pacienteSalvo.getMedicalRecordNumber() == null ||
-                pacienteSalvo.getMedicalRecordNumber().isBlank()) {
+        String medicalRecordNumber =
+                String.format("PRT-%06d", pacienteSalvo.getId());
 
-            String medicalRecordNumber =
-                    String.format("PRT-%06d", pacienteSalvo.getId());
+        pacienteSalvo.setMedicalRecordNumber(medicalRecordNumber);
 
-            pacienteSalvo.setMedicalRecordNumber(medicalRecordNumber);
-
-            pacienteSalvo = patientRepository.save(pacienteSalvo);
-        }
-
-        return pacienteSalvo;
+        return patientRepository.save(pacienteSalvo);
     }
 }
