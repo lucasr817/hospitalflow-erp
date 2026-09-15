@@ -7,8 +7,12 @@ import com.lucasramalho.hospitalflow.domain.attendance.enums.AttendanceStatus;
 import com.lucasramalho.hospitalflow.domain.attendance.repository.AttendanceRecordRepository;
 import com.lucasramalho.hospitalflow.domain.patient.entity.Patient;
 import com.lucasramalho.hospitalflow.domain.patient.repository.PatientRepository;
+import com.lucasramalho.hospitalflow.shared.exception.BusinessException;
+import com.lucasramalho.hospitalflow.shared.exception.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -43,12 +47,18 @@ public class AttendanceRecordService {
 
         Patient patient = patientRepository.findById(request.getPatientId())
                 .orElseThrow(() ->
-                        new RuntimeException("Paciente não encontrado"));
+                        new ResourceNotFoundException("Paciente não encontrado"));
 
         AttendanceRecord attendanceRecord = new AttendanceRecord();
 
         attendanceRecord.setPatient(patient);
-        attendanceRecord.setCreatedAt(request.getCreatedAt());
+
+        if (request.getCreatedAt() != null) {
+            attendanceRecord.setCreatedAt(request.getCreatedAt());
+        } else {
+            attendanceRecord.setCreatedAt(LocalDateTime.now());
+        }
+
         attendanceRecord.setAttendanceType(request.getAttendanceType());
         attendanceRecord.setStatus(AttendanceStatus.AGUARDANDO);
 
@@ -63,7 +73,7 @@ public class AttendanceRecordService {
         AttendanceRecord attendanceRecord = buscarPorId(id);
 
         if (attendanceRecord.getStatus() != AttendanceStatus.AGUARDANDO) {
-            throw new IllegalStateException(
+            throw new BusinessException(
                     "O atendimento precisa estar AGUARDANDO para ser iniciado"
             );
         }
@@ -81,7 +91,7 @@ public class AttendanceRecordService {
         AttendanceRecord attendanceRecord = buscarPorId(id);
 
         if (attendanceRecord.getStatus() != AttendanceStatus.EM_ATENDIMENTO) {
-            throw new IllegalStateException(
+            throw new BusinessException(
                     "O atendimento precisa estar EM_ATENDIMENTO para ser finalizado"
             );
         }
@@ -99,8 +109,14 @@ public class AttendanceRecordService {
         AttendanceRecord attendanceRecord = buscarPorId(id);
 
         if (attendanceRecord.getStatus() == AttendanceStatus.FINALIZADO) {
-            throw new IllegalStateException(
+            throw new BusinessException(
                     "Não é possível cancelar um atendimento finalizado"
+            );
+        }
+
+        if (attendanceRecord.getStatus() == AttendanceStatus.CANCELADO) {
+            throw new BusinessException(
+                    "O atendimento já está cancelado"
             );
         }
 
@@ -116,9 +132,16 @@ public class AttendanceRecordService {
 
         return attendanceRecordRepository.findById(id)
                 .orElseThrow(() ->
-                        new RuntimeException(
+                        new ResourceNotFoundException(
                                 "Ficha de atendimento não encontrada"
                         ));
+    }
+
+    public AttendanceRecordResponse buscarPorIdResponse(Long id) {
+
+        AttendanceRecord attendanceRecord = buscarPorId(id);
+
+        return toResponse(attendanceRecord);
     }
 
     private AttendanceRecordResponse toResponse(
@@ -134,11 +157,4 @@ public class AttendanceRecordService {
                 attendanceRecord.getStatus()
         );
     }
-    public AttendanceRecordResponse buscarPorIdResponse(Long id) {
-
-        AttendanceRecord attendanceRecord = buscarPorId(id);
-
-        return toResponse(attendanceRecord);
-    }
-
 }

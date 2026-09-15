@@ -3,8 +3,10 @@ package com.lucasramalho.hospitalflow.domain.attendance.controller;
 import com.lucasramalho.hospitalflow.domain.attendance.dto.AttendanceRecordResponse;
 import com.lucasramalho.hospitalflow.domain.attendance.dto.CreateAttendanceRecordRequest;
 import com.lucasramalho.hospitalflow.domain.attendance.service.AttendanceRecordService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @RestController
@@ -35,9 +37,10 @@ public class AttendanceRecordController {
                 attendanceRecordService.buscarFila()
         );
     }
+
     @PostMapping
     public ResponseEntity<AttendanceRecordResponse> criarFicha(
-            @RequestBody CreateAttendanceRecordRequest request) {
+            @Valid @RequestBody CreateAttendanceRecordRequest request) {
 
         return ResponseEntity.ok(
                 attendanceRecordService.criarFicha(request)

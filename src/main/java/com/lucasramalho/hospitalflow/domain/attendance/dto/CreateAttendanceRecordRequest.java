@@ -1,15 +1,18 @@
 package com.lucasramalho.hospitalflow.domain.attendance.dto;
 
 import com.lucasramalho.hospitalflow.domain.attendance.enums.AttendanceType;
+import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDateTime;
 
 public class CreateAttendanceRecordRequest {
 
+    @NotNull(message = "O paciente é obrigatório")
     private Long patientId;
 
     private LocalDateTime createdAt;
 
+    @NotNull(message = "O tipo de atendimento é obrigatório")
     private AttendanceType attendanceType;
 
     public Long getPatientId() {
