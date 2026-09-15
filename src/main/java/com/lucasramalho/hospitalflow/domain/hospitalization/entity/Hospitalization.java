@@ -22,7 +22,6 @@ public class Hospitalization {
     @Column(nullable = false)
     private HospitalizationStatus status;
 
-    @Column(nullable = false)
     private LocalDateTime admissionDate;
 
     private LocalDateTime dischargeDate;

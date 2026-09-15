@@ -5,7 +5,7 @@ CREATE TABLE hospitalizations (
 
                                   status VARCHAR(30) NOT NULL,
 
-                                  admission_date TIMESTAMP NOT NULL,
+                                  admission_date TIMESTAMP,
 
                                   discharge_date TIMESTAMP,
 
